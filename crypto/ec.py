@@ -7,8 +7,10 @@ class Curve:
     is nonzero.
     """
 
-    def __init__(self, a: int, b: int, p: int) -> None:
+    def __init__(self, a: int, b: int, p: int, q: int = None, generator=None):
         self.p = p
+        self.q = q
+        self.generator = generator
         self._check_curve_parameters(a, b)
         self.a = a
         self.b = b
@@ -32,7 +34,12 @@ class Curve:
         if not isinstance(other, Curve):
             return False
 
-        return (self.a == other.a) and (self.b == other.b) and (self.p == other.p)
+        return (
+            (self.a == other.a)
+            and (self.b == other.b)
+            and (self.p == other.p)
+            and (self.q == other.q)
+        )
 
     def __neq__(self, other) -> bool:
         return not (self == other)
