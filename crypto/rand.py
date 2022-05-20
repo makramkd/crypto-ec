@@ -1,6 +1,6 @@
 import secrets
 
-from crypto.ec import Curve
+from crypto.ec import Curve, Point
 
 
 def gen_private_key(curve: Curve) -> int:
@@ -19,3 +19,12 @@ def gen_nonce(curve: Curve) -> int:
     the attached generator.
     """
     return secrets.randbelow(curve.q)
+
+
+def gen_key_pair(curve: Curve) -> (int, Point):
+    """
+    Generate a private, public key pair that is compatible with the
+    given curve.
+    """
+    secretKey = gen_private_key(curve)
+    return secretKey, secretKey * curve.generator
